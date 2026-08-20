@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>RentHive – Community Marketplace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233478F6'/><text x='16' y='22' text-anchor='middle' fill='white' font-size='18' font-family='Arial'>R</text></svg>">
+</head>
+<body>
+
+<div class="app-container" id="app">
+
+  <!-- ==================== 1. SPLASH SCREEN ==================== -->
+  <div class="screen active" id="splash-screen">
+    <div class="splash-content">
+      <div class="splash-logo">
+        <div class="splash-icon">
+          <i class="fas fa-shopping-bag"></i>
+        </div>
+        <h1 class="splash-brand">RentHive</h1>
+        <p class="splash-tagline">Buy • Sell • Connect</p>
+      </div>
+      <button class="btn-primary splash-btn" id="get-started-btn">Get Started</button>
+    </div>
+  </div>
+
+  <!-- ==================== 2. LOGIN SCREEN ==================== -->
+  <div class="screen" id="login-screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="splash-screen">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+    </div>
+    <div class="login-content">
+      <div class="login-header">
+        <h2>Welcome Back!</h2>
+        <p>Login to continue</p>
+      </div>
+      <form class="login-form" id="login-form">
+        <div class="form-group">
+          <label for="email-input">Email</label>
+          <input type="email" id="email-input" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="password-input">Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="password-input" placeholder="Enter your password">
+            <button type="button" class="password-toggle" id="password-toggle">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div class="login-options">
+          <label class="checkbox-label">
+            <input type="checkbox" checked>
+            <span class="checkmark"></span>
+            Remember me
+          </label>
+          <a href="#" class="forgot-link">Forgot Password?</a>
+        </div>
+        <button type="submit" class="btn-primary login-btn" id="login-btn">Login</button>
+        <p class="signup-text">Don't have an account? <a href="#" class="signup-link" id="signup-link">Sign Up</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== 3. HOME SCREEN ==================== -->
+  <div class="screen" id="home-screen">
+    <div class="home-header">
+      <h1 class="brand-title">RentHive</h1>
+      <button class="notification-bell" id="home-bell">
+        <i class="fas fa-bell"></i>
+      </button>
+    </div>
+    <div class="scroll-content has-nav">
+      <!-- Search Bar -->
+      <div class="search-bar">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" placeholder="Search for products...">
+      </div>
+      <!-- Location -->
+      <div class="location-bar">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>Mumbai, India</span>
+        <i class="fas fa-chevron-down" style="font-size:10px"></i>
+      </div>
+      <!-- Categories -->
+      <div class="section-header">
+        <h3>Categories</h3>
+        <a href="#" class="see-all">See All</a>
+      </div>
+      <div class="categories-grid">
+        <div class="category-item">
+          <div class="category-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <span>Electronics</span>
+        </div>
+        <div class="category-item">
+          <div class="category-icon">
+            <i class="fas fa-car"></i>
+          </div>
+          <span>Vehicles</span>
+        </div>
+        <div class="category-item">
+          <div class="category-icon" style="background:#FEE2E2">
+            <i class="fas fa-couch" style="color:#EF4444"></i>
+          </div>
+          <span>Furniture</span>
+        </div>
+        <div class="category-item">
+          <div class="category-icon" style="background:#DBEAFE">
+            <i class="fas fa-book" style="color:#3B82F6"></i>
+          </div>
+          <span>Books</span>
+        </div>
+        <div class="category-item">
+          <div class="category-icon" style="background:#E0E7FF">
+            <i class="fas fa-tshirt" style="color:#6366F1"></i>
+          </div>
+          <span>Fashion</span>
+        </div>
+      </div>
+      <!-- Featured Ads -->
+      <div class="section-header">
+        <h3>Featured Ads</h3>
+        <a href="#" class="see-all">See All</a>
+      </div>
+      <div class="featured-grid">
+        <div class="ad-card" data-product="iphone">
+          <div class="ad-card-image">
+            <img src="https://images.unsplash.com/photo-1632661674596-df8be59a8056?w=400&h=300&fit=crop" alt="iPhone 13">
+          </div>
+          <div class="ad-card-info">
+            <div class="ad-card-title">iPhone 13</div>
+            <div class="ad-card-price">₹45,000</div>
+          </div>
+        </div>
+        <div class="ad-card">
+          <div class="ad-card-image">
+            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop" alt="Study Table">
+          </div>
+          <div class="ad-card-info">
+            <div class="ad-card-title">Study Table</div>
+            <div class="ad-card-price">₹3,500</div>
+          </div>
+        </div>
+        <div class="ad-card">
+          <div class="ad-card-image">
+            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=300&fit=crop" alt="MacBook Pro">
+          </div>
+          <div class="ad-card-info">
+            <div class="ad-card-title">MacBook Pro</div>
+            <div class="ad-card-price">₹78,000</div>
+          </div>
+        </div>
+        <div class="ad-card">
+          <div class="ad-card-image">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&h=300&fit=crop" alt="Mountain Bike">
+          </div>
+          <div class="ad-card-info">
+            <div class="ad-card-title">Mountain Bike</div>
+            <div class="ad-card-price">₹12,000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <div class="nav-item active" data-screen="home-screen">
+        <i class="fas fa-home nav-icon"></i>
+        <span>Home</span>
+      </div>
+      <div class="nav-item" data-screen="sell-screen">
+        <i class="fas fa-tag nav-icon"></i>
+        <span>Sell</span>
+      </div>
+      <div class="nav-item sell-btn" data-screen="sell-screen">
+        <div class="nav-icon-circle">
+          <i class="fas fa-plus"></i>
+        </div>
+      </div>
+      <div class="nav-item" data-screen="chat-screen">
+        <i class="fas fa-comment-dots nav-icon"></i>
+        <span>Chat</span>
+      </div>
+      <div class="nav-item" data-screen="wishlist-screen">
+        <i class="fas fa-heart nav-icon"></i>
+        <span>Wishlist</span>
+      </div>
+      <div class="nav-item" data-screen="profile-screen">
+        <i class="fas fa-user nav-icon"></i>
+        <span>Profile</span>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ==================== 4. PRODUCT DETAILS ==================== -->
+  <div class="screen" id="product-screen">
+    <div class="product-hero">
+      <img src="https://images.unsplash.com/photo-1632661674596-df8be59a8056?w=600&h=500&fit=crop" alt="iPhone 13">
+      <div class="product-hero-overlay">
+        <button class="back-btn hero-btn" data-back="home-screen">
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="hero-right-btns">
+          <button class="hero-btn"><i class="fas fa-share-alt"></i></button>
+        </div>
+      </div>
+      <div class="hero-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+    <div class="scroll-content">
+      <div class="product-info">
+        <div class="product-title-row">
+          <h2 class="product-title">iPhone 13</h2>
+          <span class="product-price">₹45,000</span>
+        </div>
+        <div class="product-tags">
+          <span>Electronics</span>
+          <span class="tag-dot">•</span>
+          <span>Used</span>
+          <span class="tag-dot">•</span>
+          <span>Mumbai</span>
+        </div>
+        <div class="seller-row">
+          <div class="seller-info">
+            <div class="seller-avatar">RS</div>
+            <div>
+              <div class="seller-label">Posted by</div>
+              <div class="seller-name">Rahul Sharma</div>
+            </div>
+          </div>
+          <div class="rating">
+            <i class="fas fa-star" style="color:#FBBF24"></i>
+            <span>4.5</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-description">
+        <h4>Description</h4>
+        <p>Selling my iPhone 13 in good condition. Battery health 85%. No scratches.</p>
+      </div>
+      <div class="product-actions">
+        <button class="btn-outline" onclick="showScreen('chat-screen')">
+          <i class="fas fa-comment-dots"></i> Chat Seller
+        </button>
+        <button class="btn-primary btn-call">
+          <i class="fas fa-phone"></i> Call Seller
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 5. SELL PRODUCT ==================== -->
+  <div class="screen" id="sell-screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="home-screen">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <h2 class="header-title">Sell Your Product</h2>
+      <div style="width:24px"></div>
+    </div>
+    <div class="scroll-content has-nav">
+      <div class="form-group">
+        <label>Upload Photos</label>
+        <div class="upload-grid">
+          <div class="upload-box">
+            <i class="fas fa-camera"></i>
+            <span>Add Photos</span>
+          </div>
+          <div class="upload-box">
+            <i class="fas fa-plus"></i>
+          </div>
+          <div class="upload-box">
+            <i class="fas fa-plus"></i>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Product Name</label>
+        <input type="text" placeholder="Enter product name">
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <div class="select-wrapper">
+          <select>
+            <option>Select category</option>
+            <option>Electronics</option>
+            <option>Vehicles</option>
+            <option>Furniture</option>
+            <option>Books</option>
+            <option>Fashion</option>
+          </select>
+          <i class="fas fa-chevron-down select-arrow"></i>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Price</label>
+        <input type="text" placeholder="Enter price">
+      </div>
+      <div class="form-group">
+        <label>Condition</label>
+        <div class="condition-options">
+          <div class="condition-option">
+            <span class="radio-circle"></span> New
+          </div>
+          <div class="condition-option active">
+            <span class="radio-circle"></span> Used
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea placeholder="Describe your product..." rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <div class="select-wrapper">
+          <select>
+            <option>Select location</option>
+            <option>Mumbai</option>
+            <option>Delhi</option>
+            <option>Bangalore</option>
+            <option>Chennai</option>
+          </select>
+          <i class="fas fa-chevron-down select-arrow"></i>
+        </div>
+      </div>
+      <button class="btn-primary post-ad-btn" id="post-ad-btn">Post Ad</button>
+    </div>
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <div class="nav-item" data-screen="home-screen">
+        <i class="fas fa-home nav-icon"></i>
+        <span>Home</span>
+      </div>
+      <div class="nav-item active" data-screen="sell-screen">
+        <i class="fas fa-tag nav-icon"></i>
+        <span>Sell</span>
+      </div>
+      <div class="nav-item sell-btn" data-screen="sell-screen">
+        <div class="nav-icon-circle">
+          <i class="fas fa-plus"></i>
+        </div>
+      </div>
+      <div class="nav-item" data-screen="chat-screen">
+        <i class="fas fa-comment-dots nav-icon"></i>
+        <span>Chat</span>
+      </div>
+      <div class="nav-item" data-screen="wishlist-screen">
+        <i class="fas fa-heart nav-icon"></i>
+        <span>Wishlist</span>
+      </div>
+      <div class="nav-item" data-screen="profile-screen">
+        <i class="fas fa-user nav-icon"></i>
+        <span>Profile</span>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ==================== 6. WISHLIST ==================== -->
+  <div class="screen" id="wishlist-screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="home-screen">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <h2 class="header-title">My Wishlist</h2>
+      <div style="width:24px"></div>
+    </div>
+    <div class="scroll-content has-nav">
+      <div class="wishlist-list">
+        <div class="wishlist-item">
+          <div class="wishlist-item-image">
+            <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=200&h=200&fit=crop" alt="Canon DSLR Camera">
+          </div>
+          <div class="wishlist-item-info">
+            <div class="wishlist-item-title">Canon DSLR Camera</div>
+            <div class="wishlist-item-price">₹25,000</div>
+          </div>
+          <button class="wishlist-heart liked">
+            <i class="fas fa-heart"></i>
+          </button>
+        </div>
+        <div class="wishlist-item">
+          <div class="wishlist-item-image">
+            <img src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=200&h=200&fit=crop" alt="Wooden Chair">
+          </div>
+          <div class="wishlist-item-info">
+            <div class="wishlist-item-title">Wooden Chair</div>
+            <div class="wishlist-item-price">₹1,200</div>
+          </div>
+          <button class="wishlist-heart liked">
+            <i class="fas fa-heart"></i>
+          </button>
+        </div>
+        <div class="wishlist-item">
+          <div class="wishlist-item-image" style="background:#FEF3C7;display:flex;align-items:center;justify-content:center">
+            <i class="fas fa-book" style="font-size:28px;color:#F59E0B"></i>
+          </div>
+          <div class="wishlist-item-info">
+            <div class="wishlist-item-title">Maths Textbook</div>
+            <div class="wishlist-item-price">₹350</div>
+          </div>
+          <button class="wishlist-heart liked">
+            <i class="fas fa-heart"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <div class="nav-item" data-screen="home-screen">
+        <i class="fas fa-home nav-icon"></i>
+        <span>Home</span>
+      </div>
+      <div class="nav-item" data-screen="sell-screen">
+        <i class="fas fa-tag nav-icon"></i>
+        <span>Sell</span>
+      </div>
+      <div class="nav-item sell-btn" data-screen="sell-screen">
+        <div class="nav-icon-circle">
+          <i class="fas fa-plus"></i>
+        </div>
+      </div>
+      <div class="nav-item" data-screen="chat-screen">
+        <i class="fas fa-comment-dots nav-icon"></i>
+        <span>Chat</span>
+      </div>
+      <div class="nav-item active" data-screen="wishlist-screen">
+        <i class="fas fa-heart nav-icon"></i>
+        <span>Wishlist</span>
+      </div>
+      <div class="nav-item" data-screen="profile-screen">
+        <i class="fas fa-user nav-icon"></i>
+        <span>Profile</span>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ==================== 7. CHAT SCREEN ==================== -->
+  <div class="screen" id="chat-screen">
+    <div class="chat-header">
+      <button class="back-btn" data-back="home-screen">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <div class="chat-user-info">
+        <div class="chat-avatar">RS</div>
+        <div>
+          <div class="chat-user-name">Rahul Sharma</div>
+          <div class="chat-user-status">Online</div>
+        </div>
+      </div>
+      <button class="more-btn"><i class="fas fa-ellipsis-v"></i></button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="message received">
+        <div class="message-text">Hi, is this iPhone 13 still available?</div>
+        <div class="message-meta">
+          <span class="message-time">10:30 AM</span>
+        </div>
+      </div>
+      <div class="message sent">
+        <div class="message-text">Yes, it is available.</div>
+        <div class="message-meta">
+          <span class="message-time">10:31 AM</span>
+          <span class="message-ticks">✓✓</span>
+        </div>
+      </div>
+      <div class="message received">
+        <div class="message-text">Can you reduce the price?</div>
+        <div class="message-meta">
+          <span class="message-time">10:32 AM</span>
+        </div>
+      </div>
+      <div class="message sent">
+        <div class="message-text">I can do ₹43,000.</div>
+        <div class="message-meta">
+          <span class="message-time">10:33 AM</span>
+          <span class="message-ticks">✓✓</span>
+        </div>
+      </div>
+      <div class="message received">
+        <div class="message-text">Okay, sounds good.</div>
+        <div class="message-meta">
+          <span class="message-time">10:34 AM</span>
+        </div>
+      </div>
+    </div>
+    <div class="chat-input-bar">
+      <input type="text" id="chat-input" placeholder="Type a message...">
+      <button class="attach-btn"><i class="fas fa-paperclip"></i></button>
+      <button class="send-btn" id="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <!-- ==================== 8. PROFILE SCREEN ==================== -->
+  <div class="screen" id="profile-screen">
+    <div class="profile-top-bar">
+      <div style="width:24px"></div>
+      <div style="width:24px"></div>
+      <button class="settings-btn"><i class="fas fa-cog"></i></button>
+    </div>
+    <div class="scroll-content has-nav">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop" alt="Rahul Sharma" style="width:100%;height:100%;object-fit:cover;border-radius:50%">
+        </div>
+        <h2 class="profile-name">Rahul Sharma</h2>
+        <p class="profile-email">rahulsharma@gmail.com</p>
+      </div>
+      <div class="profile-menu">
+        <div class="profile-menu-item" data-screen="myads-screen">
+          <i class="fas fa-tag menu-icon"></i>
+          <span>My Ads</span>
+          <i class="fas fa-chevron-right menu-arrow"></i>
+        </div>
+        <div class="profile-menu-item" data-screen="wishlist-screen">
+          <i class="fas fa-heart menu-icon"></i>
+          <span>My Wishlist</span>
+          <i class="fas fa-chevron-right menu-arrow"></i>
+        </div>
+        <div class="profile-menu-item">
+          <i class="fas fa-envelope menu-icon"></i>
+          <span>Messages</span>
+          <i class="fas fa-chevron-right menu-arrow"></i>
+        </div>
+        <div class="profile-menu-item">
+          <i class="fas fa-clock menu-icon"></i>
+          <span>Purchase History</span>
+          <i class="fas fa-chevron-right menu-arrow"></i>
+        </div>
+        <div class="profile-menu-item">
+          <i class="fas fa-cog menu-icon"></i>
+          <span>Settings</span>
+          <i class="fas fa-chevron-right menu-arrow"></i>
+        </div>
+        <div class="profile-menu-item logout" data-screen="login-screen">
+          <i class="fas fa-sign-out-alt menu-icon"></i>
+          <span>Logout</span>
+        </div>
+      </div>
+    </div>
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <div class="nav-item" data-screen="home-screen">
+        <i class="fas fa-home nav-icon"></i>
+        <span>Home</span>
+      </div>
+      <div class="nav-item" data-screen="sell-screen">
+        <i class="fas fa-tag nav-icon"></i>
+        <span>Sell</span>
+      </div>
+      <div class="nav-item sell-btn" data-screen="sell-screen">
+        <div class="nav-icon-circle">
+          <i class="fas fa-plus"></i>
+        </div>
+      </div>
+      <div class="nav-item" data-screen="chat-screen">
+        <i class="fas fa-comment-dots nav-icon"></i>
+        <span>Chat</span>
+      </div>
+      <div class="nav-item" data-screen="wishlist-screen">
+        <i class="fas fa-heart nav-icon"></i>
+        <span>Wishlist</span>
+      </div>
+      <div class="nav-item active" data-screen="profile-screen">
+        <i class="fas fa-user nav-icon"></i>
+        <span>Profile</span>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ==================== 9. MY ADS ==================== -->
+  <div class="screen" id="myads-screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="profile-screen">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <h2 class="header-title">My Ads</h2>
+      <button class="more-btn"><i class="fas fa-ellipsis-v"></i></button>
+    </div>
+    <div class="tabs">
+      <div class="tab active">Active</div>
+      <div class="tab">Sold</div>
+      <div class="tab">Expired</div>
+    </div>
+    <div class="scroll-content has-nav">
+      <div class="myads-list">
+        <div class="myads-item">
+          <div class="myads-item-image" style="background:#1a1a2e">
+            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=200&h=200&fit=crop" alt="HP Laptop">
+          </div>
+          <div class="myads-item-info">
+            <div class="myads-item-title">HP Laptop</div>
+            <div class="myads-item-price">₹28,000</div>
+          </div>
+          <button class="more-btn"><i class="fas fa-ellipsis-v"></i></button>
+        </div>
+        <div class="myads-item">
+          <div class="myads-item-image">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=200&h=200&fit=crop" alt="Mountain Cycle">
+          </div>
+          <div class="myads-item-info">
+            <div class="myads-item-title">Mountain Cycle</div>
+            <div class="myads-item-price">₹6,500</div>
+          </div>
+          <button class="more-btn"><i class="fas fa-ellipsis-v"></i></button>
+        </div>
+        <div class="myads-item">
+          <div class="myads-item-image">
+            <img src="https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=200&h=200&fit=crop" alt="Office Chair">
+          </div>
+          <div class="myads-item-info">
+            <div class="myads-item-title">Office Chair</div>
+            <div class="myads-item-price">₹2,800</div>
+          </div>
+          <button class="more-btn"><i class="fas fa-ellipsis-v"></i></button>
+        </div>
+      </div>
+    </div>
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <div class="nav-item" data-screen="home-screen">
+        <i class="fas fa-home nav-icon"></i>
+        <span>Home</span>
+      </div>
+      <div class="nav-item" data-screen="sell-screen">
+        <i class="fas fa-tag nav-icon"></i>
+        <span>Sell</span>
+      </div>
+      <div class="nav-item sell-btn" data-screen="sell-screen">
+        <div class="nav-icon-circle">
+          <i class="fas fa-plus"></i>
+        </div>
+      </div>
+      <div class="nav-item" data-screen="chat-screen">
+        <i class="fas fa-comment-dots nav-icon"></i>
+        <span>Chat</span>
+      </div>
+      <div class="nav-item" data-screen="wishlist-screen">
+        <i class="fas fa-heart nav-icon"></i>
+        <span>Wishlist</span>
+      </div>
+      <div class="nav-item" data-screen="profile-screen">
+        <i class="fas fa-user nav-icon"></i>
+        <span>Profile</span>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ==================== 10. ADMIN DASHBOARD ==================== -->
+  <div class="screen" id="admin-screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="home-screen">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <h2 class="header-title">Admin Dashboard</h2>
+      <button class="notification-bell"><i class="fas fa-bell"></i></button>
+    </div>
+    <div class="scroll-content">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fas fa-users"></i></div>
+          <div class="stat-label">Total Users</div>
+          <div class="stat-value">1,245</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><i class="fas fa-tag"></i></div>
+          <div class="stat-label">Total Ads</div>
+          <div class="stat-value">3,568</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red"><i class="fas fa-flag"></i></div>
+          <div class="stat-label">Reported Ads</div>
+          <div class="stat-value">56</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple"><i class="fas fa-shopping-cart"></i></div>
+          <div class="stat-label">Total Sold</div>
+          <div class="stat-value">1,025</div>
+        </div>
+      </div>
+      <div class="reported-section">
+        <h3>Recent Reported Ads</h3>
+        <div class="reported-list">
+          <div class="reported-item">
+            <div class="reported-avatar" style="background:#3478F6">
+              <i class="fas fa-mobile-alt" style="color:white"></i>
+            </div>
+            <div class="reported-info">
+              <div class="reported-title">iPhone 12</div>
+              <div class="reported-reason">Reason: Fake Product</div>
+            </div>
+            <button class="btn-view">View</button>
+          </div>
+          <div class="reported-item">
+            <div class="reported-avatar" style="background:#EF4444">
+              <i class="fas fa-shoe-prints" style="color:white"></i>
+            </div>
+            <div class="reported-info">
+              <div class="reported-title">Nike Shoes</div>
+              <div class="reported-reason">Reason: Wrong Info</div>
+            </div>
+            <button class="btn-view">View</button>
+          </div>
+          <div class="reported-item">
+            <div class="reported-avatar" style="background:#F59E0B">
+              <i class="fas fa-chair" style="color:white"></i>
+            </div>
+            <div class="reported-info">
+              <div class="reported-title">Furniture Set</div>
+              <div class="reported-reason">Reason: Spam</div>
+            </div>
+            <button class="btn-view">View</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end app-container -->
+
+<script src="js/app.js"></script>
+</body>
+</html>
