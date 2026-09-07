@@ -19,7 +19,7 @@ function showScreen(screenId) {
   const mainNav = document.getElementById('main-nav');
   if (mainNav) {
     // Hide nav on splash, login, product, and chat screens
-    const hideNavScreens = ['splash-screen', 'login-screen', 'product-screen', 'chat-screen'];
+    const hideNavScreens = ['splash-screen', 'login-screen', 'signup-screen', 'product-screen', 'chat-screen'];
     mainNav.style.display = hideNavScreens.includes(screenId) ? 'none' : 'flex';
     
     // Update active state
@@ -74,18 +74,118 @@ function setupSplash() {
 function setupLogin() {
   const loginForm = document.getElementById('login-form');
   const signupLink = document.getElementById('signup-link');
+  const loginError = document.getElementById('login-error');
 
   if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      showScreen('home-screen');
+      const email = document.getElementById('email-input').value.trim();
+      const password = document.getElementById('password-input').value;
+      const loginBtn = document.getElementById('login-btn');
+
+      // Hide previous errors
+      if (loginError) loginError.style.display = 'none';
+
+      // Show loading state
+      loginBtn.textContent = 'Logging in...';
+      loginBtn.disabled = true;
+
+      try {
+        await login(email, password);
+        showScreen('home-screen');
+      } catch (err) {
+        if (loginError) {
+          loginError.textContent = err.message || 'Login failed. Please check your credentials.';
+          loginError.style.display = 'block';
+        }
+      } finally {
+        loginBtn.textContent = 'Login';
+        loginBtn.disabled = false;
+      }
     });
   }
 
+  // Navigate to signup screen
   if (signupLink) {
     signupLink.addEventListener('click', (e) => {
       e.preventDefault();
-      showScreen('home-screen');
+      showScreen('signup-screen');
+    });
+  }
+
+  // === SIGNUP ===
+  const signupForm = document.getElementById('signup-form');
+  const loginLink = document.getElementById('login-link');
+  const signupError = document.getElementById('signup-error');
+  const signupSuccess = document.getElementById('signup-success');
+
+  if (signupForm) {
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fullName = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const confirm = document.getElementById('signup-confirm').value;
+      const signupBtn = document.getElementById('signup-btn');
+
+      // Hide previous messages
+      if (signupError) signupError.style.display = 'none';
+      if (signupSuccess) signupSuccess.style.display = 'none';
+
+      // Validate passwords match
+      if (password !== confirm) {
+        if (signupError) {
+          signupError.textContent = 'Passwords do not match.';
+          signupError.style.display = 'block';
+        }
+        return;
+      }
+
+      // Show loading state
+      signupBtn.textContent = 'Creating account...';
+      signupBtn.disabled = true;
+
+      try {
+        await signUp(email, password, fullName);
+        if (signupSuccess) {
+          signupSuccess.textContent = 'Account created successfully! You can now login.';
+          signupSuccess.style.display = 'block';
+        }
+        signupForm.reset();
+        // Auto-redirect to login after 2 seconds
+        setTimeout(() => {
+          showScreen('login-screen');
+        }, 2000);
+      } catch (err) {
+        if (signupError) {
+          signupError.textContent = err.message || 'Signup failed. Please try again.';
+          signupError.style.display = 'block';
+        }
+      } finally {
+        signupBtn.textContent = 'Sign Up';
+        signupBtn.disabled = false;
+      }
+    });
+  }
+
+  // Navigate back to login screen
+  if (loginLink) {
+    loginLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      showScreen('login-screen');
+    });
+  }
+
+  // Signup password toggle
+  const signupToggle = document.getElementById('signup-password-toggle');
+  const signupPasswordInput = document.getElementById('signup-password');
+  if (signupToggle && signupPasswordInput) {
+    signupToggle.addEventListener('click', () => {
+      const type = signupPasswordInput.type === 'password' ? 'text' : 'password';
+      signupPasswordInput.type = type;
+      signupToggle.innerHTML = type === 'password'
+        ? '<i class="fas fa-eye"></i>'
+        : '<i class="fas fa-eye-slash"></i>';
     });
   }
 }
