@@ -15,17 +15,21 @@ function showScreen(screenId) {
     target.classList.add('active');
   }
 
-  // Update bottom nav across all nav bars
-  const screensWithNav = ['home-screen', 'sell-screen', 'chat-screen', 'wishlist-screen', 'profile-screen', 'myads-screen'];
-  
-  document.querySelectorAll('.bottom-nav').forEach(nav => {
-    nav.querySelectorAll('.nav-item').forEach(item => {
+  // Update bottom nav
+  const mainNav = document.getElementById('main-nav');
+  if (mainNav) {
+    // Hide nav on splash, login, product, and chat screens
+    const hideNavScreens = ['splash-screen', 'login-screen', 'product-screen', 'chat-screen'];
+    mainNav.style.display = hideNavScreens.includes(screenId) ? 'none' : 'flex';
+    
+    // Update active state
+    mainNav.querySelectorAll('.nav-item').forEach(item => {
       item.classList.remove('active');
       if (item.dataset.screen === screenId) {
         item.classList.add('active');
       }
     });
-  });
+  }
 
   // Scroll to top
   window.scrollTo(0, 0);
@@ -102,17 +106,27 @@ function setupPasswordToggle() {
 }
 
 // === BOTTOM NAV ===
-function setupNavigation() {
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const screenId = item.dataset.screen;
-      if (screenId) {
-        showScreen(screenId);
-      }
-    });
-  });
-}
 
+function setupNavigation() {
+
+  document.addEventListener('click', (e) => {
+
+    const navItem = e.target.closest('.nav-item');
+
+    if (!navItem) return;
+
+    const screenId = navItem.dataset.screen;
+
+    if (!screenId) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    showScreen(screenId);
+
+  });
+
+}
 // === BACK BUTTONS ===
 function setupBackButtons() {
   document.querySelectorAll('.back-btn').forEach(btn => {
