@@ -50,15 +50,204 @@ document.addEventListener('DOMContentLoaded', () => {
   setupPasswordToggle();
   setupNavigation();
   setupBackButtons();
-  setupCategoryClick();
-  setupAdCardClick();
-  setupWishlistHearts();
   setupChatInput();
   setupTabs();
   setupSellForm();
   setupProfileMenu();
   setupNotifications();
 });
+
+// === LOAD HOME SCREEN (Dynamic from Supabase) ===
+async function loadHomeScreen() {
+  try {
+    await loadCategories();
+    await loadFeaturedAds();
+    await loadAllAds();
+  } catch (err) {
+    console.error('Error loading home screen:', err);
+  }
+}
+
+// Load categories from Supabase
+async function loadCategories() {
+  var grid = document.getElementById('categories-grid');
+  if (!grid) return;
+
+  try {
+    var categories = await fetchCategories();
+    grid.innerHTML = '';
+    categories.forEach(function(cat) {
+      var div = document.createElement('div');
+      div.className = 'category-item';
+      div.dataset.categoryId = cat.id;
+      div.innerHTML =
+        '<div class="category-icon" style="background:' + cat.bg_color + '">' +
+        '<i class="fas ' + cat.icon + '" style="color:' + cat.icon_color + '"></i>' +
+        '</div>' +
+        '<span>' + cat.name + '</span>';
+      div.addEventListener('click', function() {
+        div.style.transform = 'scale(0.92)';
+        setTimeout(function() { div.style.transform = ''; }, 150);
+        loadAdsByCategory(cat.id, cat.name);
+      });
+      grid.appendChild(div);
+    });
+  } catch (err) {
+    console.error('Error loading categories:', err);
+  }
+}
+
+// Load featured ads from Supabase
+async function loadFeaturedAds() {
+  var grid = document.getElementById('featured-grid');
+  if (!grid) return;
+
+  try {
+    var ads = await fetchFeaturedAds();
+    grid.innerHTML = '';
+    if (ads.length === 0) {
+      grid.innerHTML = '<p style="color:#9CA3AF;text-align:center;width:100%;padding:20px;">No featured ads yet</p>';
+      return;
+    }
+    ads.forEach(function(ad) {
+      grid.appendChild(createAdCard(ad));
+    });
+  } catch (err) {
+    console.error('Error loading featured ads:', err);
+  }
+}
+
+// Load all ads from Supabase
+async function loadAllAds() {
+  var grid = document.getElementById('all-ads-grid');
+  if (!grid) return;
+
+  try {
+    var ads = await fetchAds();
+    grid.innerHTML = '';
+    if (ads.length === 0) {
+      grid.innerHTML = '<p style="color:#9CA3AF;text-align:center;width:100%;padding:20px;">No ads yet</p>';
+      return;
+    }
+    ads.forEach(function(ad) {
+      grid.appendChild(createAdCard(ad));
+    });
+  } catch (err) {
+    console.error('Error loading all ads:', err);
+  }
+}
+
+// Load ads by category
+async function loadAdsByCategory(categoryId, categoryName) {
+  var grid = document.getElementById('all-ads-grid');
+  var featuredGrid = document.getElementById('featured-grid');
+  if (!grid) return;
+
+  // Hide featured section and show filtered results
+  if (featuredGrid) featuredGrid.parentElement.previousElementSibling.style.display = 'none';
+  featuredGrid.style.display = 'none';
+
+  // Update "All Ads" header to show category name
+  var allAdsHeader = grid.previousElementSibling;
+  if (allAdsHeader) allAdsHeader.querySelector('h3').textContent = categoryName;
+
+  try {
+    var ads = await fetchAds(categoryId);
+    grid.innerHTML = '';
+    if (ads.length === 0) {
+      grid.innerHTML = '<p style="color:#9CA3AF;text-align:center;width:100%;padding:20px;">No ads in ' + categoryName + '</p>';
+      return;
+    }
+    ads.forEach(function(ad) {
+      grid.appendChild(createAdCard(ad));
+    });
+  } catch (err) {
+    console.error('Error loading category ads:', err);
+  }
+}
+
+// Create an ad card element
+function createAdCard(ad) {
+  var card = document.createElement('div');
+  card.className = 'ad-card';
+  card.dataset.adId = ad.id;
+
+  var imgUrl = (ad.image_urls && ad.image_urls.length > 0)
+    ? ad.image_urls[0]
+    : 'https://via.placeholder.com/400x300?text=No+Image';
+
+  var priceFormatted = '₹' + Number(ad.price).toLocaleString('en-IN');
+
+  card.innerHTML =
+    '<div class="ad-card-image">' +
+    '<img src="' + imgUrl + '" alt="' + escapeHtml(ad.title) + '">' +
+    '</div>' +
+    '<div class="ad-card-info">' +
+    '<div class="ad-card-title">' + escapeHtml(ad.title) + '</div>' +
+    '<div class="ad-card-price">' + priceFormatted + '</div>' +
+    '<div class="ad-card-location">' +
+    '<i class="fas fa-map-marker-alt"></i> ' + (ad.location || 'India') +
+    '</div>' +
+    '</div>';
+
+  card.addEventListener('click', function() {
+    loadProductDetails(ad.id);
+  });
+
+  return card;
+}
+
+// Load product details screen
+async function loadProductDetails(adId) {
+  showScreen('product-screen');
+
+  try {
+    var ad = await fetchAdById(adId);
+    if (!ad) return;
+
+    // Set image
+    var heroImg = document.getElementById('product-hero-img');
+    if (heroImg) {
+      heroImg.src = (ad.image_urls && ad.image_urls.length > 0) ? ad.image_urls[0] : '';
+      heroImg.alt = ad.title;
+    }
+
+    // Set title & price
+    var titleEl = document.getElementById('product-detail-title');
+    if (titleEl) titleEl.textContent = ad.title;
+
+    var priceEl = document.getElementById('product-detail-price');
+    if (priceEl) priceEl.textContent = '₹' + Number(ad.price).toLocaleString('en-IN');
+
+    // Set tags
+    var catEl = document.getElementById('product-detail-category');
+    if (catEl) catEl.textContent = ad.categories ? ad.categories.name : '';
+
+    var condEl = document.getElementById('product-detail-condition');
+    if (condEl) condEl.textContent = ad.condition || 'Used';
+
+    var locEl = document.getElementById('product-detail-location');
+    if (locEl) locEl.textContent = ad.location || 'India';
+
+    // Set seller info
+    var sellerEl = document.getElementById('product-detail-seller');
+    if (sellerEl) sellerEl.textContent = ad.profiles ? ad.profiles.full_name : 'Unknown';
+
+    var avatarEl = document.getElementById('product-detail-avatar');
+    if (avatarEl && ad.profiles) {
+      var name = ad.profiles.full_name || '';
+      var initials = name.split(' ').map(function(w) { return w[0]; }).join('').toUpperCase();
+      avatarEl.textContent = initials || 'U';
+    }
+
+    // Set description
+    var descEl = document.getElementById('product-detail-desc');
+    if (descEl) descEl.textContent = ad.description || 'No description provided.';
+
+  } catch (err) {
+    console.error('Error loading product details:', err);
+  }
+}
 
 // === SPLASH SCREEN ===
 function setupSplash() {
@@ -93,6 +282,7 @@ function setupLogin() {
       try {
         await login(email, password);
         showScreen('home-screen');
+        loadHomeScreen();
       } catch (err) {
         if (loginError) {
           loginError.textContent = err.message || 'Login failed. Please check your credentials.';
@@ -237,19 +427,7 @@ function setupBackButtons() {
   });
 }
 
-// === CATEGORY CLICKS ===
-function setupCategoryClick() {
-  document.querySelectorAll('.category-item').forEach(item => {
-    item.addEventListener('click', () => {
-      item.style.transform = 'scale(0.92)';
-      setTimeout(() => {
-        item.style.transform = '';
-      }, 150);
-    });
-  });
-}
-
-// === AD CARD CLICKS ===
+// (Category clicks, ad card clicks, and wishlist hearts are now handled dynamically)
 function setupAdCardClick() {
   document.querySelectorAll('.ad-card').forEach(card => {
     card.addEventListener('click', () => {

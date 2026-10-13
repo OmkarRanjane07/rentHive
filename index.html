@@ -139,96 +139,24 @@
         <h3>Categories</h3>
         <a href="#" class="see-all">See All</a>
       </div>
-      <div class="categories-grid">
-        <div class="category-item">
-          <div class="category-icon">
-            <i class="fas fa-mobile-alt"></i>
-          </div>
-          <span>Electronics</span>
-        </div>
-        <div class="category-item">
-          <div class="category-icon">
-            <i class="fas fa-car"></i>
-          </div>
-          <span>Vehicles</span>
-        </div>
-        <div class="category-item">
-          <div class="category-icon" style="background:#FEE2E2">
-            <i class="fas fa-couch" style="color:#EF4444"></i>
-          </div>
-          <span>Furniture</span>
-        </div>
-        <div class="category-item">
-          <div class="category-icon" style="background:#DBEAFE">
-            <i class="fas fa-book" style="color:#3B82F6"></i>
-          </div>
-          <span>Books</span>
-        </div>
-        <div class="category-item">
-          <div class="category-icon" style="background:#E0E7FF">
-            <i class="fas fa-tshirt" style="color:#6366F1"></i>
-          </div>
-          <span>Fashion</span>
-        </div>
+      <div class="categories-grid" id="categories-grid">
+        <!-- Categories loaded dynamically from Supabase -->
       </div>
       <!-- Featured Ads -->
       <div class="section-header">
         <h3>Featured Ads</h3>
         <a href="#" class="see-all">See All</a>
       </div>
-      <div class="featured-grid">
-        <div class="ad-card" data-product="iphone">
-          <div class="ad-card-image">
-            <img src="images/products/iphone-13.jpg" alt="iPhone 13 128GB">
-          </div>
-          <div class="ad-card-info">
-            <div class="ad-card-title">iPhone 13 128GB</div>
-            <div class="ad-card-price">₹32,999</div>
-            <div class="ad-card-location">
-              <i class="fas fa-map-marker-alt"></i>
-              Andheri West, Mumbai
-            </div>
-          </div>
-        </div>
-        <div class="ad-card">
-          <div class="ad-card-image">
-            <img src="images/products/study-table.jpg" alt="Wooden Study Table">
-          </div>
-          <div class="ad-card-info">
-            <div class="ad-card-title">Wooden Study Table</div>
-            <div class="ad-card-price">₹3,500</div>
-            <div class="ad-card-location">
-              <i class="fas fa-map-marker-alt"></i>
-              Powai, Mumbai
-            </div>
-          </div>
-        </div>
-        <div class="ad-card">
-          <div class="ad-card-image">
-            <img src="images/products/macbook-air-m1.jpg" alt="MacBook Air M1">
-          </div>
-          <div class="ad-card-info">
-            <div class="ad-card-title">MacBook Air M1</div>
-            <div class="ad-card-price">₹62,000</div>
-            <div class="ad-card-location">
-              <i class="fas fa-map-marker-alt"></i>
-              Vikhroli, Mumbai
-            </div>
-          </div>
-        </div>
-        <div class="ad-card">
-          <div class="ad-card-image">
-            <img src="images/products/mountain-bike.jpg" alt="Mountain Bike">
-          </div>
-          <div class="ad-card-info">
-            <div class="ad-card-title">Mountain Bike</div>
-            <div class="ad-card-price">₹8,500</div>
-            <div class="ad-card-location">
-              <i class="fas fa-map-marker-alt"></i>
-              Powai, Mumbai
-            </div>
-          </div>
-        </div>
+      <div class="featured-grid" id="featured-grid">
+        <!-- Featured ads loaded dynamically from Supabase -->
+      </div>
+
+      <!-- All Ads Section -->
+      <div class="section-header">
+        <h3>All Ads</h3>
+      </div>
+      <div class="featured-grid" id="all-ads-grid">
+        <!-- All ads loaded dynamically from Supabase -->
       </div>
     </div>
 
@@ -236,7 +164,7 @@
 
   <!-- ==================== 4. PRODUCT DETAILS ==================== -->
   <div class="screen" id="product-screen">
-    <div class="product-hero"><img src="images/products/iphone-13.jpg" alt="iPhone 13 128GB">
+    <div class="product-hero"><img id="product-hero-img" src="" alt="Product">
       
       <div class="product-hero-overlay">
         <button class="back-btn hero-btn" data-back="home-screen">
@@ -255,33 +183,29 @@
     <div class="scroll-content has-nav">
       <div class="product-info">
         <div class="product-title-row">
-          <h2 class="product-title">iPhone 13</h2>
-          <span class="product-price">₹45,000</span>
+          <h2 class="product-title" id="product-detail-title">Loading...</h2>
+          <span class="product-price" id="product-detail-price"></span>
         </div>
-        <div class="product-tags">
-          <span>Electronics</span>
+        <div class="product-tags" id="product-detail-tags">
+          <span id="product-detail-category"></span>
           <span class="tag-dot">•</span>
-          <span>Used</span>
+          <span id="product-detail-condition"></span>
           <span class="tag-dot">•</span>
-          <span>Mumbai</span>
+          <span id="product-detail-location"></span>
         </div>
         <div class="seller-row">
           <div class="seller-info">
-            <div class="seller-avatar">RS</div>
+            <div class="seller-avatar" id="product-detail-avatar">OR</div>
             <div>
               <div class="seller-label">Posted by</div>
-              <div class="seller-name">Rahul Sharma</div>
+              <div class="seller-name" id="product-detail-seller">Loading...</div>
             </div>
-          </div>
-          <div class="rating">
-            <i class="fas fa-star" style="color:#FBBF24"></i>
-            <span>4.5</span>
           </div>
         </div>
       </div>
       <div class="product-description">
         <h4>Description</h4>
-        <p>Selling my iPhone 13 in good condition. Battery health 85%. No scratches.</p>
+        <p id="product-detail-desc">Loading...</p>
       </div>
       <div class="product-actions">
         <button class="btn-outline" onclick="showScreen('chat-screen')">
