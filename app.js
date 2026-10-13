@@ -197,19 +197,66 @@ function createAdCard(ad) {
   return card;
 }
 
+// === IMAGE CAROUSEL STATE ===
+var currentProductImages = [];
+var currentImageIndex = 0;
+
+function nextProductImage() {
+  if (currentProductImages.length <= 1) return;
+  currentImageIndex = (currentImageIndex + 1) % currentProductImages.length;
+  updateProductImage();
+}
+
+function prevProductImage() {
+  if (currentProductImages.length <= 1) return;
+  currentImageIndex = (currentImageIndex - 1 + currentProductImages.length) % currentProductImages.length;
+  updateProductImage();
+}
+
+function updateProductImage() {
+  var heroImg = document.getElementById('product-hero-img');
+  if (heroImg) heroImg.src = currentProductImages[currentImageIndex];
+
+  // Update dots
+  var dots = document.querySelectorAll('#hero-dots .dot');
+  dots.forEach(function(dot, i) {
+    dot.classList.toggle('active', i === currentImageIndex);
+  });
+}
+
 // Load product details screen
 async function loadProductDetails(adId) {
   showScreen('product-screen');
+  currentImageIndex = 0;
 
   try {
     var ad = await fetchAdById(adId);
     if (!ad) return;
 
-    // Set image
+    // Set images & dots
+    currentProductImages = (ad.image_urls && ad.image_urls.length > 0)
+      ? ad.image_urls
+      : ['https://via.placeholder.com/600x400?text=No+Image'];
+
     var heroImg = document.getElementById('product-hero-img');
     if (heroImg) {
-      heroImg.src = (ad.image_urls && ad.image_urls.length > 0) ? ad.image_urls[0] : '';
+      heroImg.src = currentProductImages[0];
       heroImg.alt = ad.title;
+    }
+
+    // Generate dots
+    var dotsContainer = document.getElementById('hero-dots');
+    if (dotsContainer) {
+      dotsContainer.innerHTML = '';
+      currentProductImages.forEach(function(url, i) {
+        var dot = document.createElement('span');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', function() {
+          currentImageIndex = i;
+          updateProductImage();
+        });
+        dotsContainer.appendChild(dot);
+      });
     }
 
     // Set title & price

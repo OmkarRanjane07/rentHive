@@ -164,7 +164,12 @@
 
   <!-- ==================== 4. PRODUCT DETAILS ==================== -->
   <div class="screen" id="product-screen">
-    <div class="product-hero"><img id="product-hero-img" src="" alt="Product">
+    <div class="product-hero" id="product-hero">
+      <img id="product-hero-img" src="" alt="Product">
+      
+      <!-- Tap zones for image navigation -->
+      <div style="position:absolute;top:0;left:0;width:40%;height:100%;z-index:2;" onclick="prevProductImage()"></div>
+      <div style="position:absolute;top:0;right:0;width:40%;height:100%;z-index:2;" onclick="nextProductImage()"></div>
       
       <div class="product-hero-overlay">
         <button class="back-btn hero-btn" data-back="home-screen">
@@ -174,10 +179,8 @@
           <button class="hero-btn"><i class="fas fa-share-alt"></i></button>
         </div>
       </div>
-      <div class="hero-dots">
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
+      <div class="hero-dots" id="hero-dots">
+        <!-- Dots generated dynamically -->
       </div>
     </div>
     <div class="scroll-content has-nav">
